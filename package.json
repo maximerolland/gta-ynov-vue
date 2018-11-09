@@ -9,6 +9,9 @@
   },
   "dependencies": {
     "register-service-worker": "^1.0.0",
+    "sqlite3": "^4.0.3",
+    "ui-kit": "^0.17.0",
+    "uikit": "^3.0.0-rc.21",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1"
   },
