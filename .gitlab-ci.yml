@@ -2,7 +2,6 @@ image: node:stretch
 
 stages:
   - build
-  - test
 
 cache:
   paths:
@@ -27,29 +26,3 @@ build:
 ###################
 #       TEST      #
 ###################
-
-test:
-  stage: test
-  dependencies: []
-  except:
-    - master
-    - schedules
-    - tags
-    - web
-  script:
-    - npm install --progress=false
-    - npm run unit
-
-sonar:
-  stage: test
-  dependencies: []
-  only:
-    - master
-  script:
-    - npm install --progress=false
-    - npm run unit
-    - echo sonar.projectKey=$(node -p "require('./package.json').name") >> sonar-project.properties
-    - echo sonar.projectName=$(node -p "require('./package.json').name") >> sonar-project.properties
-    - echo sonar.projectVersion=$(node -p "require('./package.json').version") >> sonar-project.properties
-    - export JAVA_HOME=$(find $CI_PROJECT_DIR -type d -name "jre?*")
-    - npm run sonar-scanner -- -Dsonar.host.url=$SONARQUBE_HOST -Dsonar.login=$SONARQUBE_USER -Dsonar.password=$SONARQUBE_PASSWORD
