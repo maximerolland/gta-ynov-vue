@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Login",
   data() {
@@ -62,6 +63,33 @@ export default {
   },
   props: {},
   methods: {
+    async signin() {
+      let mailUser;
+      let passwordUser;
+      let U = this.userInputs;
+      for (let input in U) {
+        console.log(U[input]);
+        if (U[input].type == "email") {
+          mailUser = U[input].value;
+        }
+        if (U[input].type == "password") {
+          passwordUser = U[input].value;
+        }
+      }
+      this.checkAccount(mailUser, passwordUser);
+    },
+    checkAccount(emailUser, passwordUser) {
+      axios
+        .post("http://localhost:3000/login", {
+          email: emailUser,
+          password: passwordUser
+        })
+        .then(r => {
+          localStorage.jwt = r.data.token;
+          localStorage.user = JSON.stringify(r.data.user);
+          this.$router.push("Dashboard");
+        });
+    },
     /**
      * @method checkEmpty : sets isEmpty single input if data not null
      */

@@ -8,6 +8,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "bcryptjs": "^2.4.3",
     "register-service-worker": "^1.0.0",
     "sqlite3": "^4.0.3",
     "ui-kit": "^0.17.0",

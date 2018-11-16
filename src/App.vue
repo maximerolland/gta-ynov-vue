@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <login/>
+  <router-view></router-view>
+  <button @click="logout()">Deconnexion</button>
   </div>
 </template>
 
 <script>
-import Login from "./components/Login.vue";
-
 export default {
   name: "app",
-  components: {
-    Login
+  methods: {
+    logout() {
+      localStorage.removeItem("jwt");
+      localStorage.removeItem("user");
+      this.$router.push("login");
+    }
   }
 };
 </script>
