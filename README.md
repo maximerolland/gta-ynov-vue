@@ -6,10 +6,15 @@
 - Creation de l'API
 - Mise en place du formulaire 
 - Mise en place du CI basique 
+- Authentification 
+- Deconexion
+- Gestion des rôles 
+- Ajouter des utilisateurs
+- Déployer l'API en prod
 
 ## Tache en cours 
 
-- Finaliser l'authent
+- Mettre en place le planning 
 
 ## Contexte 
 

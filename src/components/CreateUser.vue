@@ -24,7 +24,7 @@
 
         <!-- Submit -->
         <div v-if="!isSigningIn" class="uk-width-1-1">
-          <button type="submit" class="uk-button uk-button-primary uk-width-1-1">Se connecter</button>
+          <button type="submit" class="uk-button uk-button-primary uk-width-1-1">Créer</button>
         </div>
         <div v-else class="uk-width-1-1">
         </div>
@@ -82,8 +82,12 @@ export default {
   props: {},
   methods: {
     async ajouter() {
+      let firstName;
+      let lastName;
       let mailUser;
       let passwordUser;
+      let confirmPasswordUser;
+      let roleUser;
       let U = this.userInputs;
       for (let input in U) {
         if (U[input].type == "email") {
