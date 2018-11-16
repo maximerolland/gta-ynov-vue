@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from './components/Login.vue'
 import Dashboard from './components/Dashboard.vue'
+import CreateUser from './components/CreateUser.vue'
 
 Vue.use(Router)
 
@@ -18,6 +19,14 @@ let router = new Router({
       path: '/dashboard',
       name: 'Dashboard',
       component: Dashboard,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/ajouterUtilisateur',
+      name: 'CreateUser',
+      component: CreateUser,
       meta: {
         requiresAuth: true
       }

@@ -1,29 +1,26 @@
 <template>
-  <div class="login">
-    <div class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light" data-src="img/login/background.jpg" uk-img>
-      <h1>Connexion</h1>
-    </div>
-     <form class="uk-form-horizontal uk-margin" @submit.prevent="signin" uk-grid>
+  <div class="createUser">
+   <h1>Ajouter un Utilisateur</h1>
+     <form class="uk-form-horizontal uk-margin" @submit.prevent="ajouter" uk-grid>
         <!-- Inputs -->
         <div v-for="input in userInputs" class="uk-margin uk-width-1-1" :key="input.key">
-          <!-- Email -->
-          <div v-if="input.type == 'email'">
+          <!-- prenom -->
+          <div>
             <input :class="['uk-input', {'uk-form-danger':input.isEmpty}]"
             v-model="input.value"
             @change="checkEmpty(input)"
             :placeholder="input.placeholder"
-            type="email">
+            :type="input.type">
           </div>
 
-          <!-- Password -->
-          <div v-if="input.type == 'password'">
-            <input :class="['uk-input', {'uk-form-danger':input.isEmpty}]"
-            v-model="input.value"
-            @change="checkEmpty(input)"
-            :placeholder="input.placeholder"
-            type="password">
-          </div>
         </div>
+
+        <select class="uk-input">
+          <option selected value="" >-- Role --</option>
+          <option value="respequipe">Résponsable d'équipe</option>
+          <option value="drh">Directeur des ressouces humaines</option>
+          <option value="salarie">Salarié</option>
+        </select>
 
         <!-- Submit -->
         <div v-if="!isSigningIn" class="uk-width-1-1">
@@ -38,10 +35,24 @@
 <script>
 import axios from "axios";
 export default {
-  name: "Login",
+  name: "CreateUser",
   data() {
     return {
       userInputs: {
+        lastName: {
+          id: "nom",
+          value: "",
+          placeholder: "Votre nom",
+          isEmpty: false,
+          type: "text"
+        },
+        firstName: {
+          id: "prenom",
+          value: "",
+          placeholder: "Votre prénom",
+          isEmpty: false,
+          type: "text"
+        },
         email: {
           id: "email",
           value: "",
@@ -55,6 +66,13 @@ export default {
           placeholder: "Mot de passe",
           isEmpty: false,
           type: "password"
+        },
+        verifyPassword: {
+          id: "verifyPassword",
+          value: "",
+          placeholder: "Confirmer mot de passe",
+          isEmpty: false,
+          type: "password"
         }
       },
       redirectionURL: this.$route.query.redirect,
@@ -63,12 +81,11 @@ export default {
   },
   props: {},
   methods: {
-    async signin() {
+    async ajouter() {
       let mailUser;
       let passwordUser;
       let U = this.userInputs;
       for (let input in U) {
-        console.log(U[input]);
         if (U[input].type == "email") {
           mailUser = U[input].value;
         }
@@ -76,18 +93,18 @@ export default {
           passwordUser = U[input].value;
         }
       }
-      this.checkAccount(mailUser, passwordUser);
+      this.createAccount(mailUser, passwordUser);
     },
-    checkAccount(emailUser, passwordUser) {
+    createAccount(emailUser, passwordUser) {
       axios
-        .post("https://gta-ynov-vuejs-api.herokuapp.com/login", {
+        .post("https://gta-ynov-vuejs-api.herokuapp.com/register", {
           email: emailUser,
           password: passwordUser
         })
         .then(r => {
           localStorage.jwt = r.data.token;
           localStorage.user = JSON.stringify(r.data.user);
-          this.$router.push("dashboard");
+          this.$router.push("Dashboard");
         });
     },
     /**

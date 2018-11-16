@@ -1,20 +1,12 @@
 <template>
   <div id="app">
   <router-view></router-view>
-  <button @click="logout()">Deconnexion</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "app",
-  methods: {
-    logout() {
-      localStorage.removeItem("jwt");
-      localStorage.removeItem("user");
-      this.$router.push("login");
-    }
-  }
+  name: "app"
 };
 </script>
 

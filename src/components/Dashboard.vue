@@ -1,15 +1,15 @@
 <template>
   <div class="dashboard">
-   <p>How did i get there? </p>
+    <navbar></navbar>
+   <p>Bienvenue sur votre dashboard </p>
   </div>
 </template>
 
 <script>
+import Navbar from "./Navbar.vue";
 export default {
   name: "Dashboard",
-  data() {},
-  props: {},
-  methods: {}
+  components: { Navbar }
 };
 </script>
 
