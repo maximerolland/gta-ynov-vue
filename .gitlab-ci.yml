@@ -3,7 +3,6 @@ image: node:latest
 stages:
   - install
   - build
-  - push_github
   - production
 
 install:
@@ -25,17 +24,6 @@ build:
     paths:
       - dist/
 
-test_ci_push:
-  stage: push_github
-  allow_failure: false
-  script:
-    - git remote add github https://github.com/maximerolland/gta-ynov-vue
-    - git config --global user.name "maximerolland"
-    - git config --global user.email "maxime.rolland23@outlook.com"
-    - git add --all
-    - git commit -m "GitLab Runner Push"
-    - git push -u github master
-    - cd ..
 
 production:
   type: deploy
