@@ -1,32 +1,18 @@
 <template>
-  <div class="navbar">
+  <div class="navbar" v-if="isConnected()">
     <nav class="uk-navbar-container" uk-navbar>
 
         <div class="uk-navbar-left">
-
-            <ul class="uk-navbar-nav">
-                <li class="uk-active"><a href="#">Active</a></li>
-                <li>
-                    <a href="#">Parent</a>
-                    <div class="uk-navbar-dropdown">
-                        <ul class="uk-nav uk-navbar-dropdown-nav">
-                            <li class="uk-active"><a href="#">Active</a></li>
-                            <li><a href="#">Item</a></li>
-                            <li><a href="#">Item</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li><a href="#">Item</a></li>
-            </ul>
-
+           <span>{{ connectedUser.first_name }}  {{ connectedUser.last_name }}</span>
         </div>
 
         <div class="uk-navbar-right">
 
             <ul class="uk-navbar-nav">
-                <li class="uk-active"><a href="#">Active</a></li>
-                <li><router-link to="ajouterUtilisateur">Profil</router-link></li>
-                <li><router-link to="ajouterUtilisateur">Gestion</router-link></li>
+                <li><router-link to="dashboard">Dashboard</router-link></li>
+                <li><router-link to="absence">Absence</router-link></li>
+                <li><router-link to="profile">Profil</router-link></li>
+                <li v-if="connectedUser.role == 'drh'"><router-link to="GestionUtilisateur">Gestion</router-link></li>
             </ul>
             <button class="uk-button uk-button-danger" v-if="isConnected()" @click="logout()">Deconnexion</button>
         </div>
@@ -39,6 +25,11 @@
 <script>
 export default {
   name: "Navbar",
+  data() {
+    return {
+      connectedUser: {}
+    };
+  },
   methods: {
     isConnected() {
       return localStorage.getItem("jwt") != null ? true : false;
@@ -47,7 +38,13 @@ export default {
       localStorage.removeItem("jwt");
       localStorage.removeItem("user");
       this.$router.push("login");
+    },
+    getUser() {
+      this.connectedUser = JSON.parse(localStorage.getItem("user"));
     }
+  },
+  beforeMount() {
+    this.getUser();
   }
 };
 </script>

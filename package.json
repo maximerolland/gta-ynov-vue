@@ -9,11 +9,13 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@lkmadushan/vue-tuicalendar": "^0.1.6",
     "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
     "express": "^4.16.4",
     "register-service-worker": "^1.0.0",
     "sqlite3": "^4.0.3",
+    "tui-calendar": "^1.8.0",
     "ui-kit": "^0.17.0",
     "uikit": "^3.0.0-rc.21",
     "vue": "^2.5.17",

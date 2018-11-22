@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from './components/Login.vue'
-import Dashboard from './components/Dashboard.vue'
-import CreateUser from './components/CreateUser.vue'
+import Dashboard from './components/common/Dashboard.vue'
+import GestionUtilisateur from './components/respoEquipe/GestionUtilisateur.vue'
+import Profile from './components/common/Profile.vue'
+import Absence from './components/common/Absence.vue'
 
 Vue.use(Router)
 
@@ -28,9 +30,25 @@ let router = new Router({
       }
     },
     {
-      path: '/ajouterUtilisateur',
-      name: 'CreateUser',
-      component: CreateUser,
+      path: '/gestionUtilisateur',
+      name: 'GestionUtilisateur',
+      component: GestionUtilisateur,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/absence',
+      name: 'Absence',
+      component: Absence,
       meta: {
         requiresAuth: true
       }

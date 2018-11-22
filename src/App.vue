@@ -1,12 +1,27 @@
 <template>
   <div id="app">
+    <navbar v-show="isUserConnected"></navbar>
   <router-view></router-view>
   </div>
 </template>
 
 <script>
+import Navbar from "./components/Navbar.vue";
 export default {
-  name: "app"
+  name: "app",
+  components: { Navbar },
+  data() {
+    return {
+      isUserConnected: false
+    };
+  },
+  beforeMount() {
+    // FIXME
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (user != null) {
+      this.isUserConnected = true;
+    }
+  }
 };
 </script>
 
@@ -15,6 +30,5 @@ export default {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
 }
 </style>

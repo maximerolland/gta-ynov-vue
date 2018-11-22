@@ -3,9 +3,22 @@
  ## URL DE PROD
  https://gta-ynov-vuejs.herokuapp.com/
 
+ ## URL REPO GITLAB
+
+ https://gitlab.com/maxrolland/gta-ynov
+
+ ## URL REPO GITHUB
+
+ https://github.com/maximerolland/gta-ynov-vue
+
+ ## URL REPO API 
+
+ https://github.com/maximerolland/gta-ynov-vue-api
+
  ## Compte pour tester 
 
- maxime.rolland23@outlook.com mdp : 123456789
+ drh : maxime.rolland23@outlook.com mdp : 123456789
+ salarié : mael61@gmail.com  mdp : 123456789
 
 ## Tache réaliser 
 

@@ -1,15 +1,24 @@
 <template>
   <div class="dashboard">
-    <navbar></navbar>
-   <p>Bienvenue sur votre dashboard </p>
+     <vue-tuicalendar
+    ref="calendar"
+    :options="options"
+    :schedules="schedules"
+  >
+  </vue-tuicalendar>
   </div>
 </template>
 
 <script>
-import Navbar from "./Navbar.vue";
 export default {
   name: "Dashboard",
-  components: { Navbar }
+  data() {
+    return {
+      schedules: [],
+      options: {}
+    };
+  },
+  methods: {}
 };
 </script>
 
