@@ -15,7 +15,7 @@
 
         </div>
 
-        <select class="uk-input">
+        <select class="uk-input" v-model="selectedRole">
           <option selected value="" >-- Role --</option>
           <option value="respequipe">Résponsable d'équipe</option>
           <option value="drh">Directeur des ressouces humaines</option>
@@ -76,7 +76,8 @@ export default {
         }
       },
       redirectionURL: this.$route.query.redirect,
-      isSigningIn: false
+      isSigningIn: false,
+      selectedRole: ""
     };
   },
   props: {},
@@ -87,28 +88,49 @@ export default {
       let mailUser;
       let passwordUser;
       let confirmPasswordUser;
-      let roleUser;
+      let roleUser = this.selectedRole;
       let U = this.userInputs;
       for (let input in U) {
         if (U[input].type == "email") {
           mailUser = U[input].value;
         }
-        if (U[input].type == "password") {
+        if (U[input].id == "password") {
           passwordUser = U[input].value;
         }
+        if (U[input].id == "verifyPassword") {
+          passwordVerifyUser = U[input].value;
+        }
+        if (U[input].id == "prenom") {
+          firstName = U[input].value;
+        }
+        if (U[input].id == "nom") {
+          lastName = U[input].value;
+        }
       }
-      this.createAccount(mailUser, passwordUser);
+      if (passwordUser != passwordVerifyUser) {
+      } else {
+        this.createAccount(
+          firstName,
+          lastName,
+          mailUser,
+          passwordUser,
+          roleUser
+        );
+      }
     },
-    createAccount(emailUser, passwordUser) {
+    createAccount(firstName, lastName, emailUser, passwordUser, roleUser) {
+      let longName = firstName + " " + lastName;
       axios
         .post("https://gta-ynov-vuejs-api.herokuapp.com/register", {
+          name: longName,
           email: emailUser,
-          password: passwordUser
+          password: passwordUser,
+          role: roleUser
         })
         .then(r => {
           localStorage.jwt = r.data.token;
           localStorage.user = JSON.stringify(r.data.user);
-          this.$router.push("Dashboard");
+          console.log(r);
         });
     },
     /**

@@ -8,6 +8,10 @@ Vue.use(Router)
 
 let router = new Router({
   routes: [{
+      path: "/",
+      redirect: "/login"
+    },
+    {
       path: '/login',
       name: 'login',
       component: Login,
@@ -35,7 +39,6 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log(to, from, next)
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (localStorage.getItem('jwt') == null) {
       next({

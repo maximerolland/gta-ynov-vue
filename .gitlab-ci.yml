@@ -30,8 +30,8 @@ test_ci_push:
   allow_failure: false
   script:
     - git remote add github $URL_GITHUB
-    - git config --global user.name "mcourant"
-    - git config --global user.email "maxime.courant@ynov.com"
+    - git config --global user.name "maxrollan"
+    - git config --global user.email "maxime.rolland23@outlook.com"
     - git add --all
     - git commit -m "GitLab Runner Push"
     - git push -u github master
@@ -45,8 +45,8 @@ production:
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - git add ./dist
-    - git config --global user.name "mcourant"
-    - git config --global user.email "maxime.courant@ynov.com"
+    - git config --global user.name "maximerolland"
+    - git config --global user.email "maxime.rolland23@outlook.com"
     - git commit -m "Add dist"
     - gem install dpl
-    - dpl --provider=heroku --app=gta-ynov-webmobile --api-key=b90d07c0-46b1-462c-95df-d74235d6b619
+    - dpl --provider=heroku --app=gta-ynov-vuejs --api-key=528f5ca9-9973-4f45-903b-b290dd2d877e
