@@ -30,10 +30,8 @@ test_ci_push:
   allow_failure: false
   script:
     - git remote add github https://github.com/maximerolland/gta-ynov-vue
-    - git config --global user.name "maxrollan"
+    - git config --global user.name "maximerolland"
     - git config --global user.email "maxime.rolland23@outlook.com"
-    - git add --all
-    - git commit -m "GitLab Runner Push"
     - git push -u github master
     - cd ..
 

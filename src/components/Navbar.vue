@@ -25,16 +25,7 @@
 
             <ul class="uk-navbar-nav">
                 <li class="uk-active"><a href="#">Active</a></li>
-                <li>
-                    <a href="#">Parent</a>
-                    <div class="uk-navbar-dropdown">
-                        <ul class="uk-nav uk-navbar-dropdown-nav">
-                            <li class="uk-active"><a href="#">Active</a></li>
-                            <li><a href="#">Item</a></li>
-                            <li><a href="#">Item</a></li>
-                        </ul>
-                    </div>
-                </li>
+                <li><router-link to="ajouterUtilisateur">Profil</router-link></li>
                 <li><router-link to="ajouterUtilisateur">Gestion</router-link></li>
             </ul>
             <button class="uk-button uk-button-danger" v-if="isConnected()" @click="logout()">Deconnexion</button>
