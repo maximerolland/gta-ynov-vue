@@ -1,5 +1,11 @@
 # gta-ynov
 
+ ## URL DE PROD
+ https://gta-ynov-vuejs.herokuapp.com/
+
+ ## Compte pour tester 
+
+ maxime.rolland23@outlook.com mdp : 123456789
 
 ## Tache réaliser 
 

@@ -3,7 +3,7 @@ image: node:latest
 stages:
   - install
   - build
-  - production
+
 
 install:
   stage: install
@@ -24,17 +24,3 @@ build:
     paths:
       - dist/
 
-
-production:
-  type: deploy
-  stage: production
-  image: ruby:latest
-  script:
-    - apt-get update -qy
-    - apt-get install -y ruby-dev
-    - git add ./dist
-    - git config --global user.name "maximerolland"
-    - git config --global user.email "maxime.rolland23@outlook.com"
-    - git commit -m "Add dist"
-    - gem install dpl
-    - dpl --provider=heroku --app=gta-ynov-vuejs --api-key=528f5ca9-9973-4f45-903b-b290dd2d877e
