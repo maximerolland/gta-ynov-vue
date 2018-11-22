@@ -1,4 +1,4 @@
-mage: node:latest
+image: node:latest
 
 stages:
   - install
@@ -29,7 +29,7 @@ test_ci_push:
   stage: push_github
   allow_failure: false
   script:
-    - git remote add github $URL_GITHUB
+    - git remote add github https://github.com/maximerolland/gta-ynov-vue
     - git config --global user.name "maxrollan"
     - git config --global user.email "maxime.rolland23@outlook.com"
     - git add --all
