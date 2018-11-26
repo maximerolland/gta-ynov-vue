@@ -68,7 +68,6 @@ export default {
       let passwordUser;
       let U = this.userInputs;
       for (let input in U) {
-        console.log(U[input]);
         if (U[input].type == "email") {
           mailUser = U[input].value;
         }

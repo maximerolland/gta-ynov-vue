@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <navbar v-show="isUserConnected"></navbar>
-  <router-view></router-view>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -15,7 +15,7 @@ export default {
       isUserConnected: false
     };
   },
-  beforeMount() {
+  mounted() {
     // FIXME
     let user = JSON.parse(localStorage.getItem("user"));
     if (user != null) {

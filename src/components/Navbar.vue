@@ -1,22 +1,31 @@
 <template>
-  <div class="navbar" v-if="isConnected()">
+  <div class="navbar" v-show="isConnected()">
     <nav class="uk-navbar-container" uk-navbar>
+      <div class="uk-navbar-left uk-margin-left">
+        <span>{{ connectedUser.first_name.toUpperCase() }} {{ connectedUser.last_name.toUpperCase() }}</span>
+      </div>
 
-        <div class="uk-navbar-left">
-           <span>{{ connectedUser.first_name }}  {{ connectedUser.last_name }}</span>
-        </div>
-
-        <div class="uk-navbar-right">
-
-            <ul class="uk-navbar-nav">
-                <li><router-link to="dashboard">Dashboard</router-link></li>
-                <li><router-link to="absence">Absence</router-link></li>
-                <li><router-link to="profile">Profil</router-link></li>
-                <li v-if="connectedUser.role == 'drh'"><router-link to="GestionUtilisateur">Gestion</router-link></li>
-            </ul>
-            <button class="uk-button uk-button-danger" v-if="isConnected()" @click="logout()">Deconnexion</button>
-        </div>
-
+      <div class="uk-navbar-right uk-margin-right">
+        <ul class="uk-navbar-nav">
+          <li>
+            <router-link to="dashboard">Dashboard</router-link>
+          </li>
+          <li>
+            <router-link to="absence">Absence</router-link>
+          </li>
+          <li>
+            <router-link to="profile">Profil</router-link>
+          </li>
+          <li v-show="connectedUser.role != 'salarie'">
+            <router-link to="GestionUtilisateur">Gestion</router-link>
+          </li>
+        </ul>
+        <button
+          class="uk-button uk-button-danger uk-button-small"
+          v-if="isConnected()"
+          @click="logout()"
+        >Deconnexion</button>
+      </div>
     </nav>
   </div>
 </template>

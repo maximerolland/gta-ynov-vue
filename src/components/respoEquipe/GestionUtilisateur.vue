@@ -32,7 +32,7 @@
 <hr>
 
    <h2>Ajouter un Utilisateur</h2>
-     <form class="uk-form-horizontal uk-margin uk-column-1-1@s uk-column-1-2@m uk-column-1-3@l" @submit.prevent="ajouter" uk-grid>
+     <form class="uk-form-horizontal uk-margin uk-column-1-2" @submit.prevent="ajouter" uk-grid>
         <!-- Inputs -->
         <div v-for="input in userInputs" :key="input.key">
           <label v-if="input.id =='dateDeNaissance'">Date de naissance</label>
