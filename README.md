@@ -17,6 +17,26 @@
 
  ## Compte pour tester 
 
+ Je rencontre des problème avec ma BDD sqlite qui a tendance a se vider, si jamais les compte si dessous ne fonctionne pas, vous trouverez ci dessous la requête pour creer un utilisateur qui vous permttera d'acceder a l'application et de créer autant d'utilisateur que voulu : 
+
+ Si vous effectuer l'appel via Postman, verifiez de bien selectionner raw et json pour le body :)
+
+ ```
+url : https://gta-ynov-vuejs-api.herokuapp.com/register
+
+ {
+    "firstName": "maxime",
+    "lastName": "rolland",
+    "phone": "0665358561",
+    "adresse": "14 boulevard François Blancho",
+    "codePostale": "44200",
+    "dateNaissance": "23-08-1996",
+    "email": "maxime.rolland23@outlook.com",
+    "password" : "123456789",
+    "role": "drh"
+}
+ ```
+
  drh : maxime.rolland23@outlook.com mdp : 123456789
  salarié : mael61@gmail.com  mdp : 123456789
 
@@ -29,11 +49,39 @@
 - Deconexion
 - Gestion des rôles 
 - Ajouter des utilisateurs
+- Modifier des utilisateurs
+- Afficher des absences
+- Valider des absences (en cours)
+- Supprimer des utilisateurs
+- Supprimer des evenements
 - Déployer l'API en prod
 
-## Tache en cours 
 
-- Mettre en place le planning 
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your tests
+```
+npm run test
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
 
 ## Contexte 
 
@@ -132,27 +180,3 @@ Système de pointage avec géolocalisation
 Gestion par glisser-déposer
 
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```

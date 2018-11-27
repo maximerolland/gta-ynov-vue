@@ -17,27 +17,36 @@
 
     <div class="uk-margin-left">
       <h2>Modification de vos informations</h2>
-      <form class="uk-form-horizontal uk-margin" @submit.prevent="modifierUser" uk-grid>
+      <form class="uk-form-stacked" @submit.prevent="modifierUser">
         <div>
-          <input class="uk-input" v-model="newAdresse" placeholder="Nouvelle adresse" type="text">
+          <label class="uk-form-label">Votre nouvelle adresse</label>
+          <div class="uk-form-controls">
+            <input class="uk-input" v-model="newAdresse" placeholder="Nouvelle adresse" type="text">
+          </div>
         </div>
 
         <div>
-          <input
-            class="uk-input"
-            v-model="newCodePostale"
-            placeholder="Nouveau code postale"
-            type="text"
-          >
+          <label class="uk-form-label">Votre nouveau code postale</label>
+          <div class="uk-form-controls">
+            <input
+              class="uk-input"
+              v-model="newCodePostale"
+              placeholder="Nouveau code postale"
+              type="text"
+            >
+          </div>
         </div>
 
-        <div>
-          <input
-            class="uk-input"
-            v-model="newPhoneNumber"
-            placeholder="Nouveau numéro de téléphone"
-            type="text"
-          >
+        <div style="margin-bottom: 15px;">
+          <label class="uk-form-label">Votre nouveau numéro de téléphone</label>
+          <div class="uk-form-controls">
+            <input
+              class="uk-input"
+              v-model="newPhoneNumber"
+              placeholder="Nouveau numéro de téléphone"
+              type="text"
+            >
+          </div>
         </div>
 
         <div>
@@ -63,36 +72,51 @@ export default {
   },
   methods: {
     async modifierUser() {
-      axios.put("https://gta-ynov-vuejs-api.herokuapp.com/user", {
-        	firstName : this.profileUser.firstName,
-          lastName: this.profileUser.lastName,
+      axios
+        .put("https://gta-ynov-vuejs-api.herokuapp.com/user", {
+          firstName: this.profileUser.first_name,
+          lastName: this.profileUser.last_name,
           email: this.profileUser.email,
-          phone: this.newPhoneNumber != "" ? this.newPhoneNumber : this.profileUser.phone,
-          adresse:  this.newAdresse != "" ? this.newAdresse : this.profileUser.adresse,
-          codePostale:  this.newCodePostale != "" ? this.newCodePostale : this.profileUser.codePostale,
-          dateNaissance: this.profileUser.dateNaissance,
+          phone:
+            this.newPhoneNumber != ""
+              ? this.newPhoneNumber
+              : this.profileUser.phone,
+          adresse:
+            this.newAdresse != "" ? this.newAdresse : this.profileUser.adresse,
+          codePostale:
+            this.newCodePostale != ""
+              ? this.newCodePostale
+              : this.profileUser.codePostale,
+          dateNaissance: this.profileUser.date_de_naissance,
           role: this.profileUser.role,
           id: this.profileUser.id
-      })
-      .then(res => {
-        if(res.status == 200){
-          UIkit.notification({
-            message: "Modification du profil prise en compte",
-            status: "success",
-            pos: "top-right",
-            timeout: 2000
-          });
-
-        }
-        else {
-          UIkit.notification({
-            message: "Erreur lors de la modification du profile",
-            status: "error",
-            pos: "top-right",
-            timeout: 2000
-          });
-        }
-      })
+        })
+        .then(res => {
+          this.getUser(this.profileUser.id);
+          if (res.status == 200) {
+            UIkit.notification({
+              message: "Modification du profil prise en compte",
+              status: "success",
+              pos: "top-right",
+              timeout: 2000
+            });
+          } else {
+            UIkit.notification({
+              message: "Erreur lors de la modification du profile",
+              status: "error",
+              pos: "top-right",
+              timeout: 2000
+            });
+          }
+        });
+    },
+    getUser(id) {
+      axios
+        .get("https://gta-ynov-vuejs-api.herokuapp.com/user/" + id)
+        .then(res => {
+          console.log(res);
+          localStorage.user = JSON.stringify(res.data);
+        });
     }
   },
   beforeMount() {

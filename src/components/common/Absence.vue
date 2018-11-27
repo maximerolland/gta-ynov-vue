@@ -6,7 +6,7 @@
         <input
           class="uk-input"
           v-model="titreDemande"
-          placeholder="Titre de votre demande"
+          placeholder="Motif de votre demande"
           type="text"
         >
       </div>
@@ -36,35 +36,45 @@
 
     <hr>
 
-    <h2 v-show="currentUser.role != 'salarie'">Validation des absences</h2>
+    <div v-show="currentUser.role != 'salarie'">
+      <h2>Validation des absences</h2>
 
-    <table class="uk-table uk-table-striped">
-      <caption>Liste des absences à valider</caption>
-      <thead>
-        <tr>
-          <th>Titre</th>
-          <th>Type</th>
-          <th>Date début</th>
-          <th>Date fin</th>
-          <th>Statut</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(event, index) in listeAbsenceEnAttente" v-bind:key="index">
-          <td>{{ event.titre }}</td>
-          <td>{{ event.type }}</td>
-          <td>{{ event.date_debut }}</td>
-          <td>{{ event.date_fin }}</td>
-          <td>{{ event.statut }}</td>
-          <td>
-            <button type="button" class="uk-button uk-button-primary">Valider</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <hr>
+      <table class="uk-table uk-table-striped">
+        <caption>Liste des absences à valider</caption>
+        <thead>
+          <tr>
+            <th>Motif</th>
+            <th>Type</th>
+            <th>Date début</th>
+            <th>Date fin</th>
+            <th>Statut</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(event, index) in listeAbsenceEnAttente" v-bind:key="index">
+            <td>{{ event.titre }}</td>
+            <td>{{ traduitType(event.type) }}</td>
+            <td>{{ event.date_debut }}</td>
+            <td>{{ event.date_fin }}</td>
+            <td>{{ event.statut }}</td>
+            <td>
+              <button
+                type="button"
+                v-on:click="valideAbsenceColaborateur(event.id, 'valider')"
+                class="uk-button uk-button-primary uk-button-small"
+              >Valider</button>
+              <button
+                type="button"
+                v-on:click="valideAbsenceColaborateur(event.id, 'refuser')"
+                class="uk-button uk-button-danger uk-button-small"
+              >Refuser</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+    </div>
 
     <h2>Historique de vos absences</h2>
 
@@ -72,7 +82,7 @@
       <caption>Liste des absences</caption>
       <thead>
         <tr>
-          <th>Titre</th>
+          <th>Motif</th>
           <th>Type</th>
           <th>Date début</th>
           <th>Date fin</th>
@@ -82,7 +92,7 @@
       <tbody>
         <tr v-for="(event, index) in listeAbsence" v-bind:key="index">
           <td>{{ event.titre }}</td>
-          <td>{{ event.type }}</td>
+          <td>{{ traduitType(event.type) }}</td>
           <td>{{ event.date_debut }}</td>
           <td>{{ event.date_fin }}</td>
           <td>{{ event.statut }}</td>
@@ -161,7 +171,7 @@ export default {
       axios
         .get(
           "https://gta-ynov-vuejs-api.herokuapp.com/event/user/" +
-            this.currentUser.id 
+            this.currentUser.id
         )
         .then(res => {
           this.listeAbsence = [];
@@ -173,14 +183,15 @@ export default {
           console.log(err);
         });
     },
-    getAbsenceToValidate(){
+    getAbsenceToValidate() {
       axios
         .get(
           "https://gta-ynov-vuejs-api.herokuapp.com/event/user/" +
-            this.currentUser.id +"/attente"
+            this.currentUser.id +
+            "/attente"
         )
         .then(res => {
-          console.log(res)
+          console.log(res);
           this.listeAbsenceEnAttente = [];
           res.data.forEach(element => {
             this.listeAbsenceEnAttente.push(element);
@@ -189,12 +200,42 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    valideAbsenceColaborateur(idEvent, statut) {
+      axios
+        .put("https://gta-ynov-vuejs-api.herokuapp.com/event/statut", {
+          statut: statut,
+          id: idEvent
+        })
+        .then(res => {
+          console.log(res);
+        });
+    },
+    traduitType(type) {
+      let response;
+      switch (type) {
+        case "cp":
+          response = "Congé payé";
+          break;
+        case "css":
+          response = "Congé sans solde";
+          break;
+        case "rtt":
+          response = "Récuperation du temps de travail";
+          break;
+        case "ah":
+          response = "Amenagement d'horaire";
+          break;
+        default:
+          response = type;
+      }
+      return response;
     }
   },
   mounted() {
     this.currentUser = JSON.parse(localStorage.getItem("user"));
     this.getUserAbsence();
-    this.getAbsenceToValidate()
+    this.getAbsenceToValidate();
   }
 };
 </script>

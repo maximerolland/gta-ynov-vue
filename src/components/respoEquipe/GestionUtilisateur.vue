@@ -13,6 +13,7 @@
           <th>Adresse</th>
           <th>Code postale</th>
           <th>Role</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -25,6 +26,15 @@
           <td>{{ user.adresse }}</td>
           <td>{{ user.code_postale }}</td>
           <td>{{ user.role }}</td>
+          <td>
+            <button
+              type="button"
+              class="uk-button uk-button-danger uk-button-small"
+              v-on:click="deleteUser(user.id)"
+            >
+              <span uk-icon="trash"></span>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -32,26 +42,31 @@
     <hr>
 
     <h2>Ajouter un Utilisateur</h2>
-    <form class="uk-form-horizontal uk-margin uk-column-1-2" @submit.prevent="ajouter" uk-grid>
+    <form class="uk-form-stacked" @submit.prevent="ajouter" uk-grid>
       <!-- Inputs -->
       <div v-for="input in userInputs" :key="input.key">
-        <label v-if="input.id =='dateDeNaissance'">Date de naissance</label>
-        <input
-          :class="['uk-input', {'uk-form-danger':input.isEmpty}]"
-          v-model="input.value"
-          @change="checkEmpty(input)"
-          :placeholder="input.placeholder"
-          :type="input.type"
-        >
+        <label class="uk-form-label">{{ input.placeholder }}</label>
+        <div class="uk-form-controls">
+          <input
+            :class="['uk-input', {'uk-form-danger':input.isEmpty}]"
+            v-model="input.value"
+            @change="checkEmpty(input)"
+            :placeholder="input.placeholder"
+            :type="input.type"
+          >
+        </div>
       </div>
 
       <div>
-        <select class="uk-input" v-model="selectedRole">
-          <option selected value>-- Role --</option>
-          <option value="respequipe">Résponsable d'équipe</option>
-          <option value="drh">Directeur des ressouces humaines</option>
-          <option value="salarie">Salarié</option>
-        </select>
+        <label class="uk-form-label">Role</label>
+        <div class="uk-form-controls">
+          <select class="uk-input" v-model="selectedRole">
+            <option selected value>-- Role --</option>
+            <option value="respequipe">Résponsable d'équipe</option>
+            <option value="drh">Directeur des ressouces humaines</option>
+            <option value="salarie">Salarié</option>
+          </select>
+        </div>
       </div>
 
       <!-- Submit -->
@@ -65,6 +80,7 @@
 
 <script>
 import axios from "axios";
+import UIkit from "uikit";
 export default {
   name: "CreateUser",
   data() {
@@ -88,7 +104,7 @@ export default {
         birthDate: {
           id: "dateDeNaissance",
           value: "",
-          placeholder: "",
+          placeholder: "Votre date de naissance",
           isEmpty: false,
           type: "date"
         },
@@ -230,13 +246,39 @@ export default {
     },
     getAllUsers() {
       axios
-        .get("https://gta-ynov-vuejs-api.herokuapp.com/users")
+        .get("https://gta-ynov-vuejs-api.herokuapp.com/user")
         .then(res => {
           res.data.forEach(element => {
             this.listeUser.push(element);
           });
         })
         .catch(err => {
+          console.log(err);
+        });
+    },
+    deleteUser(id) {
+      axios
+        .post("https://gta-ynov-vuejs-api.herokuapp.com/deleteuser", {
+          id: id
+        })
+        .then(res => {
+          this.getAllUsers();
+          if (res.status == 200) {
+            UIkit.notification({
+              message: "L'utilisateur a correctement été supprimé",
+              status: "success",
+              pos: "top-right",
+              timeout: 2000
+            });
+          }
+        })
+        .catch(err => {
+          UIkit.notification({
+            message: "Erreur lors de la suppression de l'utilisateur",
+            status: "error",
+            pos: "top-right",
+            timeout: 2000
+          });
           console.log(err);
         });
     }

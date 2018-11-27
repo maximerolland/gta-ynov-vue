@@ -1,13 +1,13 @@
 <template>
   <div class="dashboard">
     <p v-if="listeEvenements.length == 0">Vous n'avez actuellement aucun évenement de prévu</p>
-    <div class="uk-child-width-1-2@s" v-for="(event, index) in listeEvenements" :key="index">
+    <div class="uk-child-width-1-1@s" v-for="(event, index) in listeEvenements" :key="index">
       <div class="uk-card uk-card-body uk-card-hover">
         <div class="uk-card-badge uk-label">{{ event.statut }}</div>
-        <h3 class="uk-card-title">{{ event.titre }}</h3>
-        <p>{{ event.date_debut }}</p>
-        <p>{{ event.date_fin }}</p>
-        <p>{{ event.type }}</p>
+        <h3 class="uk-card-title">Motif : {{ event.titre }}</h3>
+        <p>Absent du {{ event.date_debut }}</p>
+        <p>au {{ event.date_fin }}</p>
+        <p>{{ traduitType(event.type) }}</p>
       </div>
     </div>
   </div>
@@ -38,6 +38,26 @@ export default {
             this.listeEvenements.push(element);
           });
         });
+    },
+    traduitType(type) {
+      let response;
+      switch (type) {
+        case "cp":
+          response = "Congé payé";
+          break;
+        case "css":
+          response = "Congé sans solde";
+          break;
+        case "rtt":
+          response = "Récuperation du temps de travail";
+          break;
+        case "ah":
+          response = "Amenagement d'horaire";
+          break;
+        default:
+          response = type;
+      }
+      return response;
     }
   },
   beforeMount() {
