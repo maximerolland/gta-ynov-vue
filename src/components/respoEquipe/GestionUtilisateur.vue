@@ -1,65 +1,65 @@
 <template>
   <div class="createUser">
     <h2>Gestion des utilisateurs</h2>
-    <table class="uk-table  uk-table-striped">
-    <caption>Liste des utilisateurs</caption>
-    <thead>
+    <table class="uk-table uk-table-striped">
+      <caption>Liste des utilisateurs</caption>
+      <thead>
         <tr>
-            <th>Adresse mail</th>
-            <th>Prénom</th>
-            <th>Nom</th>
-            <th>Téléphone</th>
-            <th>Date de naissance</th>
-            <th>Adresse</th>
-            <th>Code postale</th>
-            <th>Role</th>
+          <th>Adresse mail</th>
+          <th>Prénom</th>
+          <th>Nom</th>
+          <th>Téléphone</th>
+          <th>Date de naissance</th>
+          <th>Adresse</th>
+          <th>Code postale</th>
+          <th>Role</th>
         </tr>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
         <tr v-for="(user, index) in listeUser" v-bind:key="index">
-            <td>{{ user.email }}</td>
-            <td>{{ user.first_name }}</td>
-            <td>{{ user.last_name }}</td>
-            <td>{{ user.phone }}</td>
-            <td>{{ user.date_de_naissance }}</td>
-            <td>{{ user.adresse }}</td>
-            <td>{{ user.code_postale }}</td>
-            <td>{{ user.role }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.first_name }}</td>
+          <td>{{ user.last_name }}</td>
+          <td>{{ user.phone }}</td>
+          <td>{{ user.date_de_naissance }}</td>
+          <td>{{ user.adresse }}</td>
+          <td>{{ user.code_postale }}</td>
+          <td>{{ user.role }}</td>
         </tr>
-    </tbody>
-</table>
+      </tbody>
+    </table>
 
-<hr>
+    <hr>
 
-   <h2>Ajouter un Utilisateur</h2>
-     <form class="uk-form-horizontal uk-margin uk-column-1-2" @submit.prevent="ajouter" uk-grid>
-        <!-- Inputs -->
-        <div v-for="input in userInputs" :key="input.key">
-          <label v-if="input.id =='dateDeNaissance'">Date de naissance</label>
-          <input :class="['uk-input', {'uk-form-danger':input.isEmpty}]"
+    <h2>Ajouter un Utilisateur</h2>
+    <form class="uk-form-horizontal uk-margin uk-column-1-2" @submit.prevent="ajouter" uk-grid>
+      <!-- Inputs -->
+      <div v-for="input in userInputs" :key="input.key">
+        <label v-if="input.id =='dateDeNaissance'">Date de naissance</label>
+        <input
+          :class="['uk-input', {'uk-form-danger':input.isEmpty}]"
           v-model="input.value"
           @change="checkEmpty(input)"
           :placeholder="input.placeholder"
-          :type="input.type">
+          :type="input.type"
+        >
+      </div>
 
-        </div>
+      <div>
+        <select class="uk-input" v-model="selectedRole">
+          <option selected value>-- Role --</option>
+          <option value="respequipe">Résponsable d'équipe</option>
+          <option value="drh">Directeur des ressouces humaines</option>
+          <option value="salarie">Salarié</option>
+        </select>
+      </div>
 
-        <div>
-          <select class="uk-input" v-model="selectedRole">
-            <option selected value="" >-- Role --</option>
-            <option value="respequipe">Résponsable d'équipe</option>
-            <option value="drh">Directeur des ressouces humaines</option>
-            <option value="salarie">Salarié</option>
-          </select>
-        </div>
-
-        <!-- Submit -->
-        <div v-if="!isSigningIn" class="uk-width-1-1">
-          <button type="submit" class="uk-button uk-button-primary ">Créer</button>
-        </div>
-        <div v-else class="uk-width-1-1">
-        </div>
-      </form>
+      <!-- Submit -->
+      <div v-if="!isSigningIn" class="uk-width-1-1">
+        <button type="submit" class="uk-button uk-button-primary">Créer</button>
+      </div>
+      <div v-else class="uk-width-1-1"></div>
+    </form>
   </div>
 </template>
 
@@ -229,11 +229,16 @@ export default {
       input.isEmpty = input.value === "";
     },
     getAllUsers() {
-      axios.get("https://gta-ynov-vuejs-api.herokuapp.com/users").then(res => {
-        res.data.forEach(element => {
-          this.listeUser.push(element);
+      axios
+        .get("https://gta-ynov-vuejs-api.herokuapp.com/users")
+        .then(res => {
+          res.data.forEach(element => {
+            this.listeUser.push(element);
+          });
+        })
+        .catch(err => {
+          console.log(err);
         });
-      });
     }
   },
   beforeMount() {

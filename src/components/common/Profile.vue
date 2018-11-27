@@ -16,7 +16,7 @@
     <hr>
 
     <div class="uk-margin-left">
-      <h2>Modification de vos information</h2>
+      <h2>Modification de vos informations</h2>
       <form class="uk-form-horizontal uk-margin" @submit.prevent="modifierUser" uk-grid>
         <div>
           <input class="uk-input" v-model="newAdresse" placeholder="Nouvelle adresse" type="text">

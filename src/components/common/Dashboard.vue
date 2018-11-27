@@ -1,16 +1,21 @@
 <template>
   <div class="dashboard">
-     <vue-tuicalendar
-    ref="calendar"
-    :options="options"
-    :schedules="listeEvenements"
-  >
-  </vue-tuicalendar>
+    <p v-if="listeEvenements.length == 0">Vous n'avez actuellement aucun évenement de prévu</p>
+    <div class="uk-child-width-1-2@s" v-for="(event, index) in listeEvenements" :key="index">
+      <div class="uk-card uk-card-body uk-card-hover">
+        <div class="uk-card-badge uk-label">{{ event.statut }}</div>
+        <h3 class="uk-card-title">{{ event.titre }}</h3>
+        <p>{{ event.date_debut }}</p>
+        <p>{{ event.date_fin }}</p>
+        <p>{{ event.type }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+
 export default {
   name: "Dashboard",
   data() {

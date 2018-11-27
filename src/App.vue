@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <navbar v-show="isUserConnected"></navbar>
+    <navbar v-if="checkIfUserIsConnected()"></navbar>
     <router-view></router-view>
   </div>
 </template>
@@ -15,12 +15,25 @@ export default {
       isUserConnected: false
     };
   },
+  watch: {
+    $route(to, from) {
+      this.checkIfUserIsConnected();
+    }
+  },
+  methods: {
+    checkIfUserIsConnected() {
+      let user = JSON.parse(localStorage.getItem("user"));
+      if (user != null) {
+        this.isUserConnected = true;
+        return true;
+      } else {
+        return false;
+      }
+    }
+  },
   mounted() {
     // FIXME
-    let user = JSON.parse(localStorage.getItem("user"));
-    if (user != null) {
-      this.isUserConnected = true;
-    }
+    this.checkIfUserIsConnected();
   }
 };
 </script>

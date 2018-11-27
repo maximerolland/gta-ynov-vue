@@ -1,6 +1,6 @@
 <template>
   <div class="absence">
-    <h2>Saisie des absences</h2>
+    <h2>Saisie de vos absences</h2>
     <form class="uk-form-horizontal uk-margin" @submit.prevent="ajouterEvent" uk-grid>
       <div>
         <input
@@ -39,7 +39,7 @@
     <h2 v-show="currentUser.role != 'salarie'">Validation des absences</h2>
 
     <table class="uk-table uk-table-striped">
-      <caption>Liste des absences</caption>
+      <caption>Liste des absences à valider</caption>
       <thead>
         <tr>
           <th>Titre</th>
@@ -51,7 +51,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(event, index) in listeAbsence" v-bind:key="index">
+        <tr v-for="(event, index) in listeAbsenceEnAttente" v-bind:key="index">
           <td>{{ event.titre }}</td>
           <td>{{ event.type }}</td>
           <td>{{ event.date_debut }}</td>
@@ -105,7 +105,8 @@ export default {
       dateDebutDemande: "",
       dateFinDemande: "",
       currentUser: {},
-      listeAbsence: []
+      listeAbsence: [],
+      listeAbsenceEnAttente: []
     };
   },
   methods: {
@@ -160,7 +161,7 @@ export default {
       axios
         .get(
           "https://gta-ynov-vuejs-api.herokuapp.com/event/user/" +
-            this.currentUser.id
+            this.currentUser.id 
         )
         .then(res => {
           this.listeAbsence = [];
@@ -171,11 +172,29 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    getAbsenceToValidate(){
+      axios
+        .get(
+          "https://gta-ynov-vuejs-api.herokuapp.com/event/user/" +
+            this.currentUser.id +"/attente"
+        )
+        .then(res => {
+          console.log(res)
+          this.listeAbsenceEnAttente = [];
+          res.data.forEach(element => {
+            this.listeAbsenceEnAttente.push(element);
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   mounted() {
     this.currentUser = JSON.parse(localStorage.getItem("user"));
     this.getUserAbsence();
+    this.getAbsenceToValidate()
   }
 };
 </script>

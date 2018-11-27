@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar" v-show="isConnected()">
+  <div class="navbar" v-if="connectedUser != null" v-show="isConnected()">
     <nav class="uk-navbar-container" uk-navbar>
       <div class="uk-navbar-left uk-margin-left">
         <span>{{ connectedUser.first_name.toUpperCase() }} {{ connectedUser.last_name.toUpperCase() }}</span>
