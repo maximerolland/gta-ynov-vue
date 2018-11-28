@@ -61,12 +61,12 @@
             <td>
               <button
                 type="button"
-                v-on:click="valideAbsenceColaborateur(event.id, 'valider')"
+                v-on:click="valideAbsenceColaborateur(event, 'valider')"
                 class="uk-button uk-button-primary uk-button-small"
               >Valider</button>
               <button
                 type="button"
-                v-on:click="valideAbsenceColaborateur(event.id, 'refuser')"
+                v-on:click="valideAbsenceColaborateur(event, 'refuser')"
                 class="uk-button uk-button-danger uk-button-small"
               >Refuser</button>
             </td>
@@ -169,10 +169,7 @@ export default {
     },
     getUserAbsence() {
       axios
-        .get(
-          "https://gta-ynov-vuejs-api.herokuapp.com/event/user/" +
-            this.currentUser.id
-        )
+        .get("https://gta-ynov-vuejs-api.herokuapp.com/event/user/" + this.currentUser.id)
         .then(res => {
           this.listeAbsence = [];
           res.data.forEach(element => {
@@ -186,9 +183,7 @@ export default {
     getAbsenceToValidate() {
       axios
         .get(
-          "https://gta-ynov-vuejs-api.herokuapp.com/event/user/" +
-            this.currentUser.id +
-            "/attente"
+          "https://gta-ynov-vuejs-api.herokuapp.com/event/user/" + this.currentUser.id + "/attente"
         )
         .then(res => {
           console.log(res);
@@ -201,14 +196,35 @@ export default {
           console.log(err);
         });
     },
-    valideAbsenceColaborateur(idEvent, statut) {
+    valideAbsenceColaborateur(event, statut) {
+      let messageSuccess;
+      if (statut == "valider") {
+        messageSuccess = "Absence correctement valider";
+      } else {
+        messageSuccess = "Absence correctement refuser";
+      }
       axios
         .put("https://gta-ynov-vuejs-api.herokuapp.com/event/statut", {
           statut: statut,
-          id: idEvent
+          id: event.id
         })
         .then(res => {
-          console.log(res);
+          if (res.status == 200) {
+            UIkit.notification({
+              message: messageSuccess,
+              status: "success",
+              pos: "top-right",
+              timeout: 2000
+            });
+            this.getAbsenceToValidate();
+          } else {
+            UIkit.notification({
+              message: "Erreur lors de la modification",
+              status: "error",
+              pos: "top-right",
+              timeout: 2000
+            });
+          }
         });
     },
     traduitType(type) {
