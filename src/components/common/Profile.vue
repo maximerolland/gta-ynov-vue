@@ -24,7 +24,6 @@
             <input class="uk-input" v-model="newAdresse" placeholder="Nouvelle adresse" type="text">
           </div>
         </div>
-
         <div>
           <label class="uk-form-label">Votre nouveau code postale</label>
           <div class="uk-form-controls">
@@ -36,7 +35,6 @@
             >
           </div>
         </div>
-
         <div style="margin-bottom: 15px;">
           <label class="uk-form-label">Votre nouveau numéro de téléphone</label>
           <div class="uk-form-controls">
