@@ -9,7 +9,7 @@
           <th>edzdzezdzdPrénom</th>
           <th>Nom</th>
           <th>Téléphonfiuezhifezhfhuezfiue</th>
-          <th>Date de naissance</th>
+          <th>Date de naissance de ibyvihfndskl,l;</th>
           <th>Adresse</th>
           <th>Code postale</th>
           <th>Role</th>
