@@ -117,8 +117,10 @@ export default {
         });
     }
   },
+
   beforeMount() {
     this.profileUser = JSON.parse(localStorage.getItem("user"));
+    this.testFunction();
   }
 };
 </script>
