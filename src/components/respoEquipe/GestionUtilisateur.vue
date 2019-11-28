@@ -5,8 +5,8 @@
       <caption>Liste des utilisateurs</caption>
       <thead>
         <tr>
-          <th>Adresse mail</th>
-          <th>Prénom</th>
+          <th>Adresse maidezdezdezdze</th>
+          <th>edzdzezdzdPrénom</th>
           <th>Nom</th>
           <th>Téléphone</th>
           <th>Date de naissance</th>
@@ -39,9 +39,9 @@
       </tbody>
     </table>
 
-    <hr>
+    <hr />
 
-    <h2>Ajouter un Utilisateur</h2>
+    <h2>Ajouter un Utilisateur de test</h2>
     <form class="uk-form-stacked" @submit.prevent="ajouter" uk-grid>
       <!-- Inputs -->
       <div v-for="input in userInputs" :key="input.key">
@@ -53,18 +53,18 @@
             @change="checkEmpty(input)"
             :placeholder="input.placeholder"
             :type="input.type"
-          >
+          />
         </div>
       </div>
 
       <div>
-        <label class="uk-form-label">Role</label>
+        <label class="uk-form-label">Role avec modifcation</label>
         <div class="uk-form-controls">
           <select class="uk-input" v-model="selectedRole">
             <option selected value>-- Role --</option>
             <option value="respequipe">Résponsable d'équipe</option>
             <option value="drh">Directeur des ressouces humaines</option>
-            <option value="salarie">Salarié</option>
+            <option value="salarie">Salaiuereiurié</option>
           </select>
         </div>
       </div>
